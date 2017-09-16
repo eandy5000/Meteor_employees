@@ -1,8 +1,29 @@
 import { Meteor } from 'meteor/meteor';
+import _ from 'lodash';
+import {helpers, image} from 'faker';
+
+import {Employees} from '../imports/collections/employees';
 
 Meteor.startup(() => {
 
-  var randomName = faker.name.findName();
+  var recordNumber = Employees.find({}).count(); 
 
-  console.log(randomName)
+  console.log(recordNumber)
+
+  if(!recordNumber) {
+    _.times(5000, () => {
+      const {name, email, phone } = helpers.createCard();
+
+      Employees.insert({
+        name,
+        email,
+        phone,
+        avatar: image.avatar()
+      });
+
+    });
+
+  }
+
+
 });
