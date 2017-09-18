@@ -8,7 +8,6 @@ Meteor.startup(() => {
 
   var recordNumber = Employees.find({}).count(); 
 
-  console.log(recordNumber)
 
   if(!recordNumber) {
     _.times(5000, () => {
@@ -23,7 +22,11 @@ Meteor.startup(() => {
 
     });
 
-  }
+  };
+
+  Meteor.publish('employees', function(per_page) {
+    return Employees.find({}, {limit: per_page})
+  })
 
 
 });

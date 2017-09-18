@@ -7,7 +7,6 @@ import EmployeeList from './components/EmployeeList'
 const App = () => {
     return (
         <div>
-            Hi
             <EmployeeList />
         </div>
     )
