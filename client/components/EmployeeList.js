@@ -7,11 +7,14 @@ import EmployeeDetail from './EmployeeDetail'
 const PER_PAGE = 20
 
 class EmployeeList extends Component {
-    constructor(props) {
-        super(props)
-        this.state={
-            loadCount: 1
-        }
+    
+    componentWillMount() {
+        this.page = 1
+    }
+
+    loadMore() {
+        Meteor.subscribe('employees', (PER_PAGE * (this.page + 1)))
+        this.page += 1
     }
 
     renderList() {
@@ -38,11 +41,7 @@ class EmployeeList extends Component {
                 <div className="btn-load">
                     <button 
                         className="btn btn-primary btn-load btn-lg"
-                        onClick={() => {
-                            this.setState({loadCount: this.state.loadCount + 1})
-                            // updates the subscription
-                            Meteor.subscribe('employees', (PER_PAGE * this.state.loadCount))
-                        }}
+                        onClick={this.loadMore.bind(this)}
                     >Load more...</button>
                 </div>
             </div>
